@@ -1,6 +1,6 @@
 package iiqcov.blog.springbootdeveloper.service.token;
 
-import iiqcov.blog.springbootdeveloper.config.jwt.TokenProvider;
+import iiqcov.blog.springbootdeveloper.auth.jwt.TokenProvider;
 import iiqcov.blog.springbootdeveloper.domain.User;
 import iiqcov.blog.springbootdeveloper.service.user.UserService;
 import lombok.RequiredArgsConstructor;

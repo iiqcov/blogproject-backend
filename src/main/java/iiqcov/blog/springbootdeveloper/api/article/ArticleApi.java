@@ -14,21 +14,21 @@ import org.springframework.web.bind.annotation.*;
 public class ArticleApi {
     private final BlogService blogService;
 
-    @PostMapping("/article")
+    @PostMapping("/api/article")
     public ResponseEntity<Article> createArticle(@RequestBody AddArticleRequest addArticleRequest){
         Article savedArticle = blogService.save(addArticleRequest);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(savedArticle);
     }
 
-    @DeleteMapping("/article/{id}")
+    @DeleteMapping("/api/article/{id}")
     public ResponseEntity<Article> deleteArticle(@PathVariable Long id){
         blogService.delete(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT)
                 .build();
     }
 
-    @PutMapping("/article/{id}")
+    @PutMapping("/api/article/{id}")
     public ResponseEntity<Article> modifyArticle(@PathVariable Long id, @RequestBody UpdateArticleRequest request){
         Article updatedArticle=blogService.update(id, request);
         return ResponseEntity.status(HttpStatus.OK)

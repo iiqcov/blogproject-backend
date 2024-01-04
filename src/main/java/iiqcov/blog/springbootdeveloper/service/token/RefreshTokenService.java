@@ -1,19 +1,15 @@
 package iiqcov.blog.springbootdeveloper.service.token;
 
-import iiqcov.blog.springbootdeveloper.config.jwt.TokenProvider;
+import iiqcov.blog.springbootdeveloper.auth.jwt.TokenProvider;
 import iiqcov.blog.springbootdeveloper.domain.RefreshToken;
 import iiqcov.blog.springbootdeveloper.domain.User;
 import iiqcov.blog.springbootdeveloper.error.exception.UserNotFoundException;
 import iiqcov.blog.springbootdeveloper.repository.RefreshTokenRepository;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
-import java.util.Date;
 import java.util.Optional;
-import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service

@@ -1,10 +1,7 @@
-package iiqcov.blog.springbootdeveloper.config.jwt;
+package iiqcov.blog.springbootdeveloper.auth.jwt;
 
 import iiqcov.blog.springbootdeveloper.domain.User;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Header;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -45,7 +42,7 @@ public class TokenProvider {
                     .setSigningKey(jwtProperties.getSecretKey())
                     .parseClaimsJws(token);
             return true;
-        } catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
     }

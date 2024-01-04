@@ -1,4 +1,4 @@
-package iiqcov.blog.springbootdeveloper.config.jwt;
+package iiqcov.blog.springbootdeveloper.auth.jwt;
 
 import lombok.Getter;
 import lombok.Setter;

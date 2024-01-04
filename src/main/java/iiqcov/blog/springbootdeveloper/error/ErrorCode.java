@@ -7,7 +7,8 @@ import org.springframework.http.HttpStatus;
 public enum ErrorCode {
 
     ENTITY_NOT_FOUND("C03", "Entity Not Found.", HttpStatus.BAD_REQUEST.value()),
-    USER_NOT_FOUND("A02", "User is not Found.", HttpStatus.BAD_REQUEST.value());
+    USER_NOT_FOUND("A02", "User is not Found.", HttpStatus.BAD_REQUEST.value()),
+    ACCESS_TOKEN_INVALID("AT02", "Access Token is Invalid.", HttpStatus.UNAUTHORIZED.value());
 
     private final String code;
     private final String message;

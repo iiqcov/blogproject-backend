@@ -53,7 +53,7 @@ public class BlogService {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
 
-        boolean isAdmin = authorities.contains(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        boolean isAdmin = authorities.contains(new SimpleGrantedAuthority("ROLE_USER"));
         if (!isAdmin){
             throw new IllegalArgumentException("not authorized");
         }
