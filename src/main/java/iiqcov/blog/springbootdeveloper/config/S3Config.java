@@ -12,9 +12,6 @@ import org.springframework.beans.factory.annotation.Value;
 @Configuration
 public class S3Config {
 
-    @Value("${amazonProperties.endpointUrl}")
-    private String endpointUrl;
-
     @Value("${amazonProperties.accessKey}")
     private String accessKey;
 

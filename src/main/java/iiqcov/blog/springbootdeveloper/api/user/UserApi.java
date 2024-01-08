@@ -5,7 +5,6 @@ import iiqcov.blog.springbootdeveloper.domain.User;
 import iiqcov.blog.springbootdeveloper.dto.user.AddUserReqeust;
 import iiqcov.blog.springbootdeveloper.dto.user.AddUserResponse;
 import iiqcov.blog.springbootdeveloper.dto.user.LoginRequest;
-import iiqcov.blog.springbootdeveloper.dto.user.TokenResponse;
 import iiqcov.blog.springbootdeveloper.service.token.RefreshTokenService;
 import iiqcov.blog.springbootdeveloper.service.token.TokenService;
 import iiqcov.blog.springbootdeveloper.service.user.UserService;
@@ -48,7 +47,6 @@ public class UserApi {
         RefreshToken refreshToken=refreshTokenService.createRefreshToken(user);
         String token=tokenService.createNewAccessToken(refreshToken.getRefreshToken());
         CookieUtil.addCookie(response, "token", token, 60*60*2);
-        System.out.println("token = " + token);
 
         AddUserResponse addUserResponse=AddUserResponse.builder()
                 .email(user.getEmail())
@@ -72,9 +70,6 @@ public class UserApi {
 
             return ResponseEntity.status(HttpStatus.OK).build();
         } catch (UsernameNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .build();
-        } catch (BadCredentialsException e){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .build();
         }

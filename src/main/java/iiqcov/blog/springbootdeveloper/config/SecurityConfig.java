@@ -53,7 +53,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests()
                 .requestMatchers(HttpMethod.GET, "/article/{id}", "/articles").permitAll()
                 .requestMatchers("/api/login", "/api/sign-up", "/api/logout").permitAll()
-                .requestMatchers("/api/article", "/api/article/{id}").authenticated()
+                .requestMatchers("/api/article", "/api/article/{id}", "/api/image").authenticated()
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                 .and()
                 .cors().configurationSource(configurationSource())
