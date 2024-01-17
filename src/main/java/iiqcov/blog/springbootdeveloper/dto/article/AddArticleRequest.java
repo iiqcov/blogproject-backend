@@ -1,9 +1,11 @@
 package iiqcov.blog.springbootdeveloper.dto.article;
 
-import iiqcov.blog.springbootdeveloper.domain.Article;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.Arrays;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -11,11 +13,15 @@ import lombok.NoArgsConstructor;
 public class AddArticleRequest {
     private String title;
     private String content;
+    private String folder;
 
-    public Article toEntity(){
-        return Article.builder()
-                .title(title)
-                .content(content)
-                .build();
+    public List<String> getFolerList(){
+        String cleanedFolder=folder;
+
+        if (folder.startsWith("/")){
+            cleanedFolder=folder.substring(1);
+        }
+
+        return Arrays.asList(cleanedFolder.split("/"));
     }
 }

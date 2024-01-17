@@ -1,9 +1,12 @@
 package iiqcov.blog.springbootdeveloper.service.article;
 
+import iiqcov.blog.springbootdeveloper.dao.FolderFindDao;
 import iiqcov.blog.springbootdeveloper.domain.Article;
+import iiqcov.blog.springbootdeveloper.domain.Folder;
 import iiqcov.blog.springbootdeveloper.dto.article.AddArticleRequest;
 import iiqcov.blog.springbootdeveloper.dto.article.UpdateArticleRequest;
 import iiqcov.blog.springbootdeveloper.repository.BlogRepository;
+import iiqcov.blog.springbootdeveloper.service.folder.FolderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,9 +22,39 @@ import java.util.List;
 @Service
 public class BlogService {
     private final BlogRepository blogRepository;
+    private final FolderFindDao folderFindDao;
+    private final FolderService folderService;
 
     public Article save(AddArticleRequest request){
-        return blogRepository.save(request.toEntity());
+        List<String> folderList=request.getFolerList();
+
+        Folder parentFolder=null;
+
+        for (String folderName: folderList){
+            if (parentFolder==null){
+                Folder folder=folderService.findFolderByName(folderName);
+                if (folder==null){
+                    folderService.createFolder(folderName, null);
+                    folder=folderService.findFolderByName(folderName);
+                }
+                parentFolder=folder;
+            } else{
+                List<String> subFolders=folderFindDao.findSubfolders(parentFolder.getName());
+                if (!subFolders.contains(folderName)){
+                    folderService.createFolder(folderName, parentFolder.getName());
+                }
+                parentFolder=folderService.findFolderByName(folderName);
+            }
+        }
+
+        Article article=Article.builder()
+                .title(request.getTitle())
+                .content(request.getContent())
+                .folder(parentFolder)
+                .build();
+        parentFolder.getArticles().add(article);
+
+        return blogRepository.save(article);
     }
 
     public List<Article> findAll(){

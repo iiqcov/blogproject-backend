@@ -1,18 +1,17 @@
 package iiqcov.blog.springbootdeveloper.domain;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
 
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
+@Table(name = "article")
 public class Article {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,12 +32,15 @@ public class Article {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-
+    @ManyToOne
+    @JoinColumn(name = "folder_id")
+    private Folder folder;
 
     @Builder
-    public Article(String title, String content){
+    public Article(String title, String content, Folder folder){
         this.title=title;
         this.content=content;
+        this.folder=folder;
     }
 
     public void update(String title, String content){

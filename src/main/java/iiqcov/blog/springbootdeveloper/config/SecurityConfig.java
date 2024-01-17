@@ -51,7 +51,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http.authorizeHttpRequests()
-                .requestMatchers(HttpMethod.GET, "/article/{id}", "/articles").permitAll()
+                .requestMatchers(HttpMethod.GET, "/article/{id}", "/articles", "/folders").permitAll()
                 .requestMatchers("/api/login", "/api/sign-up", "/api/logout").permitAll()
                 .requestMatchers("/api/article", "/api/article/{id}", "/api/image").authenticated()
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
