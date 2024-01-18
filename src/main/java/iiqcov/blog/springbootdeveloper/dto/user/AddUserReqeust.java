@@ -1,6 +1,5 @@
 package iiqcov.blog.springbootdeveloper.dto.user;
 
-import iiqcov.blog.springbootdeveloper.enums.Role;
 import lombok.Getter;
 import lombok.Setter;
 

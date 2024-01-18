@@ -4,6 +4,7 @@ import iiqcov.blog.springbootdeveloper.domain.Article;
 import iiqcov.blog.springbootdeveloper.dto.article.ArticleListViewResponse;
 import iiqcov.blog.springbootdeveloper.service.article.BlogService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,9 +28,19 @@ public class ArticleViewApi {
         List<ArticleListViewResponse> articles=blogService.findAll().stream()
                 .map(ArticleListViewResponse::new)
                 .toList();
-        return ResponseEntity.ok()
+        return ResponseEntity.status(HttpStatus.OK)
                 .body(articles);
     }
+
+    @GetMapping("/folder/{folderName}")
+    public ResponseEntity<List<ArticleListViewResponse>> getArticlesByFolder(@PathVariable("folderName") String folderName){
+        List<ArticleListViewResponse> articles=blogService.findByFolderName(folderName).stream()
+                .map(ArticleListViewResponse::new)
+                .toList();
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(articles);
+    }
+
     @GetMapping("/article/{id}")
     public ResponseEntity<Article> getArticle(@PathVariable Long id, Model model){
         Article article=blogService.findById(id);

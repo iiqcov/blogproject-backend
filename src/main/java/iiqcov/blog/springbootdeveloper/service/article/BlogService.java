@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Collection;
 import java.util.List;
 
+@Transactional
 @RequiredArgsConstructor
 @Service
 public class BlogService {
@@ -64,6 +65,11 @@ public class BlogService {
     public Article findById(Long id){
         return blogRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("not found: " + id));
+    }
+
+    public List<Article> findByFolderName(String folderName){
+        Folder folder=folderService.findFolderByName(folderName);
+        return blogRepository.findByFolder(folder);
     }
 
     public void delete(Long id){
