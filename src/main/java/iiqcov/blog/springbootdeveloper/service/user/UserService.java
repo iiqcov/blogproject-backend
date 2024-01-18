@@ -2,7 +2,6 @@ package iiqcov.blog.springbootdeveloper.service.user;
 
 import iiqcov.blog.springbootdeveloper.domain.User;
 import iiqcov.blog.springbootdeveloper.dto.user.AddUserReqeust;
-import iiqcov.blog.springbootdeveloper.enums.Role;
 import iiqcov.blog.springbootdeveloper.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -21,8 +20,7 @@ public class UserService {
                 .email(dto.getEmail())
                 .password(bCryptPasswordEncoder.encode(dto.getPassword()))
                 .nickname(dto.getNickname())
-                        .role(Role.ROLE_MEMBER)
-                .build()); // 저장된 유저 정보의 닉네임 반환
+                .build());
     }
 
     public User findById(Long userId){

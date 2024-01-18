@@ -1,6 +1,5 @@
 package iiqcov.blog.springbootdeveloper.domain;
 
-import iiqcov.blog.springbootdeveloper.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -27,15 +26,11 @@ public class User implements UserDetails {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "role", nullable = false)
-    private Role role;
-
 
     @Builder
-    public User(String email, String password, String auth, String nickname, Role role){
+    public User(String email, String password, String auth, String nickname){
         this.email=email;
         this.password=password;
-        this.role=role;
     }
 
     @Override
