@@ -34,7 +34,7 @@ public class ArticleViewApi {
 
     @GetMapping("/folder/{folderName}")
     public ResponseEntity<List<ArticleListViewResponse>> getArticlesByFolder(@PathVariable("folderName") String folderName){
-        List<ArticleListViewResponse> articles=blogService.findByFolderName(folderName).stream()
+        List<ArticleListViewResponse> articles=blogService.findAllArticles(folderName).stream()
                 .map(ArticleListViewResponse::new)
                 .toList();
         return ResponseEntity.status(HttpStatus.OK)

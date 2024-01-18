@@ -15,6 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -67,9 +68,17 @@ public class BlogService {
                 .orElseThrow(() -> new IllegalArgumentException("not found: " + id));
     }
 
-    public List<Article> findByFolderName(String folderName){
+    public List<Article> findAllArticles(String folderName){
         Folder folder=folderService.findFolderByName(folderName);
-        return blogRepository.findByFolder(folder);
+        return findArticlesInSubFolders(folder);
+    }
+
+    private List<Article> findArticlesInSubFolders(Folder folder){
+        List<Article> articles=new ArrayList<>(blogRepository.findByFolder(folder));
+        for (Folder subFolder: folder.getSubFolders()){
+            articles.addAll(findArticlesInSubFolders(subFolder));
+        }
+        return articles;
     }
 
     public void delete(Long id){
