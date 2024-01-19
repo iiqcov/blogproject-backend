@@ -53,6 +53,7 @@ public class BlogService {
                 .title(request.getTitle())
                 .content(request.getContent())
                 .folder(parentFolder)
+                .thumbnailLink(request.getThumbnailLink())
                 .build();
         parentFolder.getArticles().add(article);
 

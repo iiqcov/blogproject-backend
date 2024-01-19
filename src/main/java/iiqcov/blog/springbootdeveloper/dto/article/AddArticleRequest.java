@@ -14,6 +14,7 @@ public class AddArticleRequest {
     private String title;
     private String content;
     private String folder;
+    private String thumbnailLink;
 
     public List<String> getFolerList(){
         String cleanedFolder=folder;

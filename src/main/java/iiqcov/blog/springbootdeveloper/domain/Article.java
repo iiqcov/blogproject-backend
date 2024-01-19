@@ -36,11 +36,15 @@ public class Article {
     @JoinColumn(name = "folder_id")
     private Folder folder;
 
+    @Column(name = "thumbnail")
+    private String thumbnailLink;
+
     @Builder
-    public Article(String title, String content, Folder folder){
+    public Article(String title, String content, Folder folder, String thumbnailLink){
         this.title=title;
         this.content=content;
         this.folder=folder;
+        this.thumbnailLink=thumbnailLink;
     }
 
     public void update(String title, String content){
