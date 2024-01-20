@@ -47,8 +47,9 @@ public class Article {
         this.thumbnailLink=thumbnailLink;
     }
 
-    public void update(String title, String content){
+    public void update(String title, String content, String thumbnailLink){
         this.title=title;
         this.content=content;
+        this.thumbnailLink=thumbnailLink;
     }
 }

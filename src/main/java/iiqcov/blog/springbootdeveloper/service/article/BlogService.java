@@ -94,7 +94,7 @@ public class BlogService {
         Article article=blogRepository.findById(id)
                 .orElseThrow(()-> new IllegalArgumentException("not found: "+id));
         authorizeArticleAuthor(article);
-        article.update(request.getTitle(), request.getContent());
+        article.update(request.getTitle(), request.getContent(), request.getThumbnailLink());
         return article;
     }
 
