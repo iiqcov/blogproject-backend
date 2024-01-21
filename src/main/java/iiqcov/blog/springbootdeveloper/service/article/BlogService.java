@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 
 @Transactional
@@ -75,6 +76,8 @@ public class BlogService {
     public Page<Article> findAllArticles(String folderName, Pageable pageable){
         Folder folder=folderService.findFolderByName(folderName);
         List<Article> articles=findArticlesInSubFolders(folder);
+
+        articles.sort(Comparator.comparing(Article::getId).reversed());
 
         int start=(int) pageable.getOffset();
         int end=Math.min((start+pageable.getPageSize()), articles.size());
