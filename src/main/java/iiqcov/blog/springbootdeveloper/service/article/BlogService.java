@@ -8,6 +8,9 @@ import iiqcov.blog.springbootdeveloper.dto.article.UpdateArticleRequest;
 import iiqcov.blog.springbootdeveloper.repository.BlogRepository;
 import iiqcov.blog.springbootdeveloper.service.folder.FolderService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -60,8 +63,8 @@ public class BlogService {
         return blogRepository.save(article);
     }
 
-    public List<Article> findAll(){
-        return blogRepository.findAll();
+    public Page<Article> findAll(Pageable pageable){
+        return blogRepository.findAll(pageable);
     }
 
     public Article findById(Long id){
@@ -69,9 +72,14 @@ public class BlogService {
                 .orElseThrow(() -> new IllegalArgumentException("not found: " + id));
     }
 
-    public List<Article> findAllArticles(String folderName){
+    public Page<Article> findAllArticles(String folderName, Pageable pageable){
         Folder folder=folderService.findFolderByName(folderName);
-        return findArticlesInSubFolders(folder);
+        List<Article> articles=findArticlesInSubFolders(folder);
+
+        int start=(int) pageable.getOffset();
+        int end=Math.min((start+pageable.getPageSize()), articles.size());
+
+        return new PageImpl<>(articles.subList(start, end), pageable, articles.size());
     }
 
     private List<Article> findArticlesInSubFolders(Folder folder){
@@ -81,6 +89,7 @@ public class BlogService {
         }
         return articles;
     }
+
 
     public void delete(Long id){
         Article article=blogRepository.findById(id)
