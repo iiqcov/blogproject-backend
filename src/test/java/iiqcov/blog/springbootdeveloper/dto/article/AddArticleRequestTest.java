@@ -13,7 +13,7 @@ class AddArticleRequestTest {
 
     @Test
     void getFolerList() {
-        AddArticleRequest request=new AddArticleRequest("title", "content", "/A Folder/B Folder/C Folder");
+        AddArticleRequest request=new AddArticleRequest("title", "content", "/A Folder/B Folder/C Folder", null, true);
 
         assertThat(request.getFolerList()).isEqualTo(Arrays.asList("A Folder", "B Folder", "C Folder"));
     }

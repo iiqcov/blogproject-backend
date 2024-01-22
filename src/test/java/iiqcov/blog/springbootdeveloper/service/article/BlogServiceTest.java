@@ -26,7 +26,7 @@ class BlogServiceTest extends FolderTest{
     @Test
     @DisplayName("이미 존재하는 폴더(3계층)에 새로운 게시글 생성")
     void existingFolder3rdNewArticle() {
-        AddArticleRequest request=new AddArticleRequest("새로운 제목", "새로운 내용", "/A Folder/B Folder 1/C Folder");
+        AddArticleRequest request=new AddArticleRequest("새로운 제목", "새로운 내용", "/A Folder/B Folder 1/C Folder", null, true);
         String savedFolder="C Folder";
         String savedArticleTitle="새로운 제목";
 
@@ -40,7 +40,7 @@ class BlogServiceTest extends FolderTest{
     @Test
     @DisplayName("이미 존재하는 폴더(2계층)에 새로운 게시글 생성")
     void existingFolder2ndNewArticle(){
-        AddArticleRequest request=new AddArticleRequest("새로운 제목", "새로운 내용", "/A Folder/B Folder 1");
+        AddArticleRequest request=new AddArticleRequest("새로운 제목", "새로운 내용", "/A Folder/B Folder 1", null, true);
         String savedFolder="B Folder 1";
         String savedArticleTitle="새로운 제목";
 
@@ -55,7 +55,7 @@ class BlogServiceTest extends FolderTest{
     @Test
     @DisplayName("이미 존재하는 폴더(1계층)에 새로운 게시글 생성")
     void existingFolder1stNewArticle(){
-        AddArticleRequest request=new AddArticleRequest("새로운 제목", "새로운 내용", "/A Folder");
+        AddArticleRequest request=new AddArticleRequest("새로운 제목", "새로운 내용", "/A Folder", null, true);
         String savedFolder="A Folder";
         String savedArticleTitle="새로운 제목";
 
@@ -70,7 +70,7 @@ class BlogServiceTest extends FolderTest{
     @Test
     @DisplayName("새로운 폴더(1계층)에 새로운 게시글 생성")
     void newFolder1stNewArticle(){
-        AddArticleRequest request=new AddArticleRequest("새로운 제목", "새로운 내용", "/X Folder");
+        AddArticleRequest request=new AddArticleRequest("새로운 제목", "새로운 내용", "/X Folder", null, true);
         String savedFolder="X Folder";
         String savedArticleTitle="새로운 제목";
 
@@ -86,7 +86,7 @@ class BlogServiceTest extends FolderTest{
     @Test
     @DisplayName("새로운 폴더(2계층)에 새로운 게시글 생성 - 1")
     void newFolder2ndNewArticle1(){
-        AddArticleRequest request=new AddArticleRequest("새로운 제목", "새로운 내용", "/X Folder/Y Folder");
+        AddArticleRequest request=new AddArticleRequest("새로운 제목", "새로운 내용", "/X Folder/Y Folder", null, true);
         String savedFolder="Y Folder";
         String parentFolder="X Folder";
         String savedArticleTitle="새로운 제목";
@@ -103,7 +103,7 @@ class BlogServiceTest extends FolderTest{
     @Test
     @DisplayName("새로운 폴더(2계층)에 새로운 게시글 생성 - 2")
     void newFolder2ndNewArticle2(){
-        AddArticleRequest request=new AddArticleRequest("새로운 제목", "새로운 내용", "/A Folder/Y Folder");
+        AddArticleRequest request=new AddArticleRequest("새로운 제목", "새로운 내용", "/A Folder/Y Folder", null, true);
         String savedFolder="Y Folder";
         String parentFolder="A Folder";
         String savedArticleTitle="새로운 제목";
@@ -120,7 +120,7 @@ class BlogServiceTest extends FolderTest{
     @Test
     @DisplayName("새로운 폴더(3계층)에 새로운 게시글 생성 - 1")
     void newFolder3rdNewArticle1(){
-        AddArticleRequest request=new AddArticleRequest("새로운 제목", "새로운 내용", "/X Folder/Y Folder/Z Folder");
+        AddArticleRequest request=new AddArticleRequest("새로운 제목", "새로운 내용", "/X Folder/Y Folder/Z Folder", null, true);
         String savedFolder="Z Folder";
         String parentFolder="Y Folder";
         String pparentFolder="X Folder";
@@ -141,7 +141,7 @@ class BlogServiceTest extends FolderTest{
     @Test
     @DisplayName("새로운 폴더(3계층)에 새로운 게시글 생성 - 2")
     void newFolder3rdNewArticle2(){
-        AddArticleRequest request=new AddArticleRequest("새로운 제목", "새로운 내용", "/A Folder/Y Folder/Z Folder");
+        AddArticleRequest request=new AddArticleRequest("새로운 제목", "새로운 내용", "/A Folder/Y Folder/Z Folder", null, true);
         String savedFolder="Z Folder";
         String parentFolder="Y Folder";
         String pparentFolder="A Folder";
@@ -163,7 +163,7 @@ class BlogServiceTest extends FolderTest{
     @Test
     @DisplayName("새로운 폴더(3계층)에 새로운 게시글 생성 - 3")
     void newFolder3rdNewArticle3(){
-        AddArticleRequest request=new AddArticleRequest("새로운 제목", "새로운 내용", "/A Folder/B Folder 1/Z Folder");
+        AddArticleRequest request=new AddArticleRequest("새로운 제목", "새로운 내용", "/A Folder/B Folder 1/Z Folder", null, true);
         String savedFolder="Z Folder";
         String parentFolder="B Folder 1";
         String pparentFolder="A Folder";
