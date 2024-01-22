@@ -11,4 +11,5 @@ public class UpdateArticleRequest {
     private String title;
     private String content;
     private String thumbnailLink;
+    private boolean publicStatus;
 }

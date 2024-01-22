@@ -58,6 +58,7 @@ public class BlogService {
                 .content(request.getContent())
                 .folder(parentFolder)
                 .thumbnailLink(request.getThumbnailLink())
+                .publicStatus(request.isPublicStatus())
                 .build();
         parentFolder.getArticles().add(article);
 
@@ -106,7 +107,7 @@ public class BlogService {
         Article article=blogRepository.findById(id)
                 .orElseThrow(()-> new IllegalArgumentException("not found: "+id));
         authorizeArticleAuthor(article);
-        article.update(request.getTitle(), request.getContent(), request.getThumbnailLink());
+        article.update(request.getTitle(), request.getContent(), request.getThumbnailLink(), request.isPublicStatus());
         return article;
     }
 

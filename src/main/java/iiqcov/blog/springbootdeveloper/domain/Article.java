@@ -39,17 +39,22 @@ public class Article {
     @Column(name = "thumbnail")
     private String thumbnailLink;
 
+    @Column(name = "public_status")
+    private boolean publicStatus;
+
     @Builder
-    public Article(String title, String content, Folder folder, String thumbnailLink){
+    public Article(String title, String content, Folder folder, String thumbnailLink, boolean publicStatus){
         this.title=title;
         this.content=content;
         this.folder=folder;
         this.thumbnailLink=thumbnailLink;
+        this.publicStatus=publicStatus;
     }
 
-    public void update(String title, String content, String thumbnailLink){
+    public void update(String title, String content, String thumbnailLink, boolean publicStatus){
         this.title=title;
         this.content=content;
         this.thumbnailLink=thumbnailLink;
+        this.publicStatus=publicStatus;
     }
 }
