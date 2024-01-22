@@ -3,13 +3,11 @@ package iiqcov.blog.springbootdeveloper.service.token;
 import iiqcov.blog.springbootdeveloper.auth.jwt.TokenProvider;
 import iiqcov.blog.springbootdeveloper.domain.RefreshToken;
 import iiqcov.blog.springbootdeveloper.domain.User;
-import iiqcov.blog.springbootdeveloper.error.exception.UserNotFoundException;
 import iiqcov.blog.springbootdeveloper.repository.RefreshTokenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -22,16 +20,8 @@ public class RefreshTokenService {
                 .orElseThrow(()->new IllegalArgumentException("Unexpected token"));
     }
 
-    public RefreshToken findByUserId(Long userId){
-        Optional<RefreshToken> refreshToken=refreshTokenRepository.findByUserId(userId);
-        if (!refreshToken.isPresent()){
-            throw new UserNotFoundException();
-        }
-        return refreshToken.get();
-    }
-
     public RefreshToken createRefreshToken(User user){
-        Duration refreshTokenDuration = Duration.ofDays(7); // 리프레시 토큰의 만료 시간을 설정합니다.
+        Duration refreshTokenDuration = Duration.ofDays(28); // 리프레시 토큰의 만료 시간을 설정합니다.
         String refreshTokenValue=tokenProvider.generateToken(user, refreshTokenDuration);
 
         RefreshToken refreshToken=new RefreshToken(user.getId(), refreshTokenValue);
