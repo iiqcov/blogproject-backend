@@ -3,6 +3,7 @@ package iiqcov.blog.springbootdeveloper.service.token;
 import iiqcov.blog.springbootdeveloper.auth.jwt.TokenProvider;
 import iiqcov.blog.springbootdeveloper.domain.User;
 import iiqcov.blog.springbootdeveloper.service.user.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,4 +26,17 @@ public class TokenService {
 
         return tokenProvider.generateToken(user, Duration.ofDays(1));
     }
+
+    public boolean isMatched(HttpServletRequest request){
+        return tokenProvider.validToken(getTokenFromCookie(request));
+    }
+
+    private String getTokenFromCookie(HttpServletRequest request) {
+        String bearerToken = request.getHeader("Authorization");
+        if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
+            return bearerToken.substring(7);
+        }
+        return null;
+    }
+
 }

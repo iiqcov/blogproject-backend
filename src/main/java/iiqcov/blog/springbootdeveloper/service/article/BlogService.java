@@ -65,8 +65,12 @@ public class BlogService {
         return blogRepository.save(article);
     }
 
-    public Page<Article> findAll(Pageable pageable){
+    public Page<Article> findAllArticles(Pageable pageable){
         return blogRepository.findAll(pageable);
+    }
+
+    public Page<Article> findAllArticlesIfPublicStatusIsTrue(Pageable pageable){
+        return blogRepository.findByPublicStatusTrue(pageable);
     }
 
     public Article findById(Long id){
@@ -74,9 +78,21 @@ public class BlogService {
                 .orElseThrow(() -> new IllegalArgumentException("not found: " + id));
     }
 
-    public Page<Article> findAllArticles(String folderName, Pageable pageable){
+    public Page<Article> findAllArticlesInFolder(String folderName, Pageable pageable){
         Folder folder=folderService.findFolderByName(folderName);
         List<Article> articles=findArticlesInSubFolders(folder);
+
+        articles.sort(Comparator.comparing(Article::getId).reversed());
+
+        int start=(int) pageable.getOffset();
+        int end=Math.min((start+pageable.getPageSize()), articles.size());
+
+        return new PageImpl<>(articles.subList(start, end), pageable, articles.size());
+    }
+
+    public Page<Article> findAllArticlesIfPublicStatusIsTrueInFolder(String folderName, Pageable pageable){
+        Folder folder=folderService.findFolderByName(folderName);
+        List<Article> articles=findArticlesInSubFoldersIfPublicStatusIsTrue(folder);
 
         articles.sort(Comparator.comparing(Article::getId).reversed());
 
@@ -90,6 +106,14 @@ public class BlogService {
         List<Article> articles=new ArrayList<>(blogRepository.findByFolder(folder));
         for (Folder subFolder: folder.getSubFolders()){
             articles.addAll(findArticlesInSubFolders(subFolder));
+        }
+        return articles;
+    }
+
+    private List<Article> findArticlesInSubFoldersIfPublicStatusIsTrue(Folder folder){
+        List<Article> articles=new ArrayList<>(blogRepository.findByFolderAndPublicStatusTrue(folder));
+        for (Folder subFolder: folder.getSubFolders()){
+            articles.addAll(findArticlesInSubFoldersIfPublicStatusIsTrue(subFolder));
         }
         return articles;
     }
