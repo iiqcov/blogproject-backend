@@ -2,6 +2,7 @@ package iiqcov.blog.springbootdeveloper.api.article;
 
 import iiqcov.blog.springbootdeveloper.domain.Article;
 import iiqcov.blog.springbootdeveloper.dto.article.ArticleListViewResponse;
+import iiqcov.blog.springbootdeveloper.dto.article.ArticleResponse;
 import iiqcov.blog.springbootdeveloper.dto.article.PagedArticleListViewResponse;
 import iiqcov.blog.springbootdeveloper.service.article.BlogService;
 import iiqcov.blog.springbootdeveloper.service.token.TokenService;
@@ -60,15 +61,17 @@ public class ArticleViewApi {
     }
 
     @GetMapping("/article/{id}")
-    public ResponseEntity<Article> getArticle(@PathVariable Long id, HttpServletRequest request){
+    public ResponseEntity<ArticleResponse> getArticle(@PathVariable Long id, HttpServletRequest request){
         Article article=blogService.findById(id);
+        String folderpath= blogService.getFolderPath(article.getFolder());
+        ArticleResponse response=new ArticleResponse(article, folderpath);
         if (article.isPublicStatus()){
             return ResponseEntity.ok()
-                    .body(article);
+                    .body(response);
         } else{
             if (tokenService.isMatched(request)){
                 return ResponseEntity.ok()
-                        .body(article);
+                        .body(response);
             } else{
                 return ResponseEntity.status(HttpStatus.FORBIDDEN)
                         .body(null);

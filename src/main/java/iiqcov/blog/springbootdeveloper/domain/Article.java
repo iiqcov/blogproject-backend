@@ -51,10 +51,11 @@ public class Article {
         this.publicStatus=publicStatus;
     }
 
-    public void update(String title, String content, String thumbnailLink, boolean publicStatus){
+    public void update(String title, String content, String thumbnailLink, boolean publicStatus, Folder folder){
         this.title=title;
         this.content=content;
         this.thumbnailLink=thumbnailLink;
         this.publicStatus=publicStatus;
+        this.folder=folder;
     }
 }

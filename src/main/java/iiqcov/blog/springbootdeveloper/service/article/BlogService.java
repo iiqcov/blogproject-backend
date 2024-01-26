@@ -131,7 +131,29 @@ public class BlogService {
         Article article=blogRepository.findById(id)
                 .orElseThrow(()-> new IllegalArgumentException("not found: "+id));
         authorizeArticleAuthor(article);
-        article.update(request.getTitle(), request.getContent(), request.getThumbnailLink(), request.isPublicStatus());
+
+        List<String> folderList=request.getFolerList();
+
+        Folder parentFolder=null;
+
+        for (String folderName: folderList){
+            if (parentFolder==null){
+                Folder folder=folderService.findFolderByName(folderName);
+                if (folder==null){
+                    folderService.createFolder(folderName, null);
+                    folder=folderService.findFolderByName(folderName);
+                }
+                parentFolder=folder;
+            } else{
+                List<String> subFolders=folderFindDao.findSubfolders(parentFolder.getName());
+                if (!subFolders.contains(folderName)){
+                    folderService.createFolder(folderName, parentFolder.getName());
+                }
+                parentFolder=folderService.findFolderByName(folderName);
+            }
+        }
+
+        article.update(request.getTitle(), request.getContent(), request.getThumbnailLink(), request.isPublicStatus(), parentFolder);
         return article;
     }
 
@@ -145,4 +167,13 @@ public class BlogService {
         }
     }
 
+    public String getFolderPath(Folder folder){
+        StringBuilder path=new StringBuilder();
+
+        while (folder!=null){
+            path.insert(0, "/"+folder.getName());
+            folder=folder.getParentFolders();
+        }
+        return path.toString();
+    }
 }
