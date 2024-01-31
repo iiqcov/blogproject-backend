@@ -22,16 +22,21 @@ public class ImageService {
     @Value("${amazonProperties.bucketName}")
     private String bucketName;
 
+    @Value("${amazonProperties.cloudFrontDomainName}")
+    private String cloudFrontDomainName;
+
     public String addImage(MultipartFile image) {
         String fileName = image.getOriginalFilename();
+        String fileUrl="";
         try {
             File file = convertMultiPartToFile(image);
             uploadFileToS3Bucket(fileName, file);
             file.delete();
+            fileUrl=cloudFrontDomainName+"/"+fileName;
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return s3Client.getUrl(bucketName, fileName).toString();
+        return fileUrl;
     }
 
     private File convertMultiPartToFile(MultipartFile file) throws IOException {
